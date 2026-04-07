@@ -1,4 +1,4 @@
-# 📚 Study Insights Dashboard
+# Study Insights Dashboard
 
 > *Because knowing how you study is just as important as studying itself.*
 
