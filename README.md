@@ -9,7 +9,7 @@
 
 ---
 
-## 🧠 Overview
+## Overview
 
 **Study Insights Dashboard** is a full-stack web application designed to help students take control of their learning habits. By logging daily study sessions — including subject, hours spent, and mood — students can uncover meaningful patterns in their productivity and make data-driven decisions about how they spend their study time.
 
@@ -17,7 +17,7 @@ Built as a portfolio project, this app demonstrates end-to-end full-stack develo
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---|---|
