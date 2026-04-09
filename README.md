@@ -31,22 +31,22 @@ Built as a portfolio project, this app demonstrates end-to-end full-stack develo
 
 ## Tech Stack
 
-### Frontend
+### Frontend:
 - **HTML5** — Semantic markup and structure
 - **CSS3 / SCSS** — Modular, maintainable styling
 - **Vanilla JavaScript (ES6+)** — Dynamic UI and API interaction
 
-### Backend
+### Backend:
 - **Node.js** — JavaScript runtime
 - **Express.js** — Lightweight REST API framework
 
-### Data & Visualization
+### Data & Visualization:
 - **JSON File Storage** — Lightweight, file-based persistence layer
 - **Chart.js** — Interactive, responsive data visualizations
 
 ---
 
-## Project Structure
+## Project Structure:
 
 ```
 study-insights-dashboard/
@@ -71,14 +71,14 @@ study-insights-dashboard/
 
 ## Getting Started
 
-### Prerequisites
+### Prerequisites:
 
 Make sure you have the following installed on your machine:
 
 - [Node.js](https://nodejs.org/) (v18 or higher)
 - [npm](https://www.npmjs.com/) (comes with Node.js)
 
-### Installation
+### Installation:
 
 **1. Clone the repository**
 
@@ -109,7 +109,7 @@ http://localhost:3000
 
 ---
 
-## API Endpoints
+## API Endpoints:
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -142,7 +142,7 @@ Content-Type: application/json
 
 ---
 
-## 📈 Dashboard Preview
+## 📈 Dashboard Preview:
 
 ```
 ┌─────────────────────────────────────────┐
@@ -162,7 +162,7 @@ Content-Type: application/json
 
 ---
 
-## Key Learning Outcomes
+## Key Learning Outcomes:
 
 This project was built to practice and demonstrate the following skills:
 
@@ -174,14 +174,14 @@ This project was built to practice and demonstrate the following skills:
 
 ---
 
-## Future Improvements
+## Future Improvements:
 
 This project is actively being improved. Planned features include:
 
 - [ ] **User Authentication** — Login/signup so multiple users can track their own data
 - [ ] **MongoDB Integration** — Replace JSON file storage with a proper NoSQL database
 - [ ] **AI-Powered Predictions** — Use ML models to forecast productivity based on past trends
-- [ ] **Advanced UI/UX** — Polished design with animations, dark mode, and responsive layout
+- [ ] **Advanced UI/UX** — Polished design with animations, dark and light mode, and responsive layout
 - [ ] **Weekly & Monthly Analytics** — Time-series views and trend analysis over longer periods
 - [ ] **Export Reports** — Download study summaries as PDF or CSV
 
