@@ -1,108 +1,118 @@
 const form = document.getElementById("study-form");
 const dataList = document.getElementById("data-list");
+const insightsDiv = document.getElementById("insights");
 
-let chart; // to store chart instance
+let chart;
 
-// Fetch and display data
+// LOAD DATA
 async function loadData() {
   const res = await fetch("/api/get-data");
   const data = await res.json();
 
-  // Clear list
+  renderList(data);
+  renderChart(data);
+  generateInsights(data);
+}
+
+// LIST
+function renderList(data) {
   dataList.innerHTML = "";
 
-  let subjects = {};
-  
   data.forEach(entry => {
-    // Show list
     const li = document.createElement("li");
     li.textContent = `${entry.subject} - ${entry.hours} hrs (Mood: ${entry.mood})`;
     dataList.appendChild(li);
-
-    // Prepare chart data
-    if (!subjects[entry.subject]) {
-      subjects[entry.subject] = 0;
-    }
-    subjects[entry.subject] = (subjects[entry.subject] || 0) + parseInt(entry.hours);
   });
-
-  renderChart(subjects);
 }
 
-// Render Chart
-function renderChart(subjectData) {
+// CHART
+function renderChart(data) {
   const canvas = document.getElementById("studyChart");
-
-  if (!canvas) {
-    console.log("Canvas not found");
-    return;
-  }
-
   const ctx = canvas.getContext("2d");
 
-  const labels = Object.keys(subjectData);
-  const values = Object.values(subjectData);
+  const subjectTotals = {};
 
-  console.log("FINAL Labels:", labels);
-  console.log("FINAL Values:", values);
+  data.forEach(entry => {
+    subjectTotals[entry.subject] =
+      (subjectTotals[entry.subject] || 0) + entry.hours;
+  });
 
-  // 🚨 Force test if data somehow empty
-  if (labels.length === 0) {
-    console.log("No data → using fallback");
-    labels.push("Test");
-    values.push(5);
-  }
+  const labels = Object.keys(subjectTotals);
+  const values = Object.values(subjectTotals);
 
-  // Destroy previous chart safely
-  if (chart) {
-    chart.destroy();
-    chart = null;
-  }
+  if (chart) chart.destroy();
 
   chart = new Chart(ctx, {
     type: "bar",
     data: {
       labels: labels,
       datasets: [{
-  label: "Study Hours",
-  data: values,
-  backgroundColor: [
-    "rgba(255, 99, 132, 0.7)",
-    "rgba(54, 162, 235, 0.7)",
-    "rgba(255, 206, 86, 0.7)",
-    "rgba(75, 192, 192, 0.7)",
-    "rgba(153, 102, 255, 0.7)"
-  ],
-  borderRadius: 8
-}]
+        label: "Study Hours",
+        data: values,
+        backgroundColor: [
+          "#ff6b6b",
+          "#4dabf7",
+          "#ffd43b",
+          "#63e6be",
+          "#b197fc"
+        ]
+      }]
     },
     options: {
-  responsive: true,
-  plugins: {
-    legend: {
-      labels: {
-        color: "white"
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: { color: "white" }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "white" }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: { color: "white" }
+        }
       }
     }
-  },
-  scales: {
-    x: {
-      ticks: {
-        color: "white"
-      }
-    },
-    y: {
-      beginAtZero: true,
-      ticks: {
-        color: "white"
-      }
-    }
-  }
-}
   });
 }
 
-// Handle form submit
+// INSIGHTS (REAL DATA SCIENCE LOGIC)
+function generateInsights(data) {
+  if (data.length === 0) {
+    insightsDiv.innerHTML = "No data yet.";
+    return;
+  }
+
+  let totalHours = 0;
+  let subjectTotals = {};
+  let moodTotal = 0;
+
+  data.forEach(entry => {
+    totalHours += entry.hours;
+    moodTotal += entry.mood;
+
+    subjectTotals[entry.subject] =
+      (subjectTotals[entry.subject] || 0) + entry.hours;
+  });
+
+  const avgHours = (totalHours / data.length).toFixed(2);
+  const avgMood = (moodTotal / data.length).toFixed(2);
+
+  const bestSubject = Object.keys(subjectTotals).reduce((a, b) =>
+    subjectTotals[a] > subjectTotals[b] ? a : b
+  );
+
+  insightsDiv.innerHTML = `
+    <h3>📌 Insights</h3>
+    <p>🔥 Most Studied Subject: <b>${bestSubject}</b></p>
+    <p>⏱ Average Study Hours: <b>${avgHours}</b></p>
+    <p>😊 Average Mood: <b>${avgMood}</b></p>
+  `;
+}
+
+// FORM SUBMIT
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -110,40 +120,17 @@ form.addEventListener("submit", async (e) => {
   const hours = document.getElementById("hours").value;
   const mood = document.getElementById("mood").value;
 
-  const data = { subject, hours, mood };
-
   await fetch("/api/add-data", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify({ subject, hours, mood })
   });
 
   form.reset();
-  loadData(); // refresh UI
+  loadData();
 });
 
-// Load data on page start
-async function loadData() {
-  const res = await fetch("/api/get-data");
-  const data = await res.json();
-
-  console.log("Fetched Data:", data); // 🔍 DEBUG
-
-  dataList.innerHTML = "";
-
-  let subjects = {};
-  
-  data.forEach(entry => {
-    const li = document.createElement("li");
-    li.textContent = `${entry.subject} - ${entry.hours} hrs (Mood: ${entry.mood})`;
-    dataList.appendChild(li);
-
-    subjects[entry.subject] = (subjects[entry.subject] || 0) + parseInt(entry.hours);
-  });
-
-  console.log("Processed Chart Data:", subjects); // 🔍 DEBUG
-
-  renderChart(subjects);
-}
+// INIT
+loadData();

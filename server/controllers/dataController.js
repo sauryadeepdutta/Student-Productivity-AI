@@ -1,29 +1,26 @@
 const fs = require("fs");
 const path = require("path");
 
-const dataFilePath = path.join(__dirname, "../../data/data.json");
+const filePath = path.join(__dirname, "../../data/data.json");
 
-// Add Data
 exports.addData = (req, res) => {
   const newEntry = req.body;
 
-  // Read existing data
-  const data = JSON.parse(fs.readFileSync(dataFilePath));
+  const data = JSON.parse(fs.readFileSync(filePath));
 
-  // Add new entry
   data.push({
     ...newEntry,
+    hours: Number(newEntry.hours),
+    mood: Number(newEntry.mood),
     date: new Date().toISOString()
   });
 
-  // Save back to file
-  fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 
-  res.json({ message: "Data added successfully!" });
+  res.json({ message: "Data saved successfully" });
 };
 
-// Get Data
 exports.getData = (req, res) => {
-  const data = JSON.parse(fs.readFileSync(dataFilePath));
+  const data = JSON.parse(fs.readFileSync(filePath));
   res.json(data);
 };

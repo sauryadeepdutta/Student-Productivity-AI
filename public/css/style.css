@@ -1,20 +1,67 @@
 body {
+  margin: 0;
   font-family: Arial;
-  background: #111;
+  background: #0f172a;
   color: white;
   text-align: center;
 }
 
-form {
-  margin-top: 20px;
+h1 {
+  margin: 20px 0;
 }
-form input, form select, form button {
-  margin: 10px;
+
+.container {
+  width: 80%;
+  max-width: 800px;
+  margin: auto;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+input, select, button {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  background: #4dabf7;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #339af0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #1e293b;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.chart-container {
+  margin-top: 30px;
+}
+
+canvas {
+  background: #1e293b;
+  border-radius: 10px;
   padding: 10px;
 }
-#studyChart {
-  width: 400px !important;
-  height: 300px !important;
-  background: white;
+
+.insights {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
-/*# sourceMappingURL=style.css.map */
